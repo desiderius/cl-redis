@@ -261,7 +261,9 @@ server with the first character removed."
   "Define and export a function with the name <*CMD-REDIX*>-<CMD> for
 processing a Redis command CMD.  Here REPLY-TYPE is the expected reply
 format."
-  (let ((cmd-name (intern (fmt "~:@(~A-~A~)" *cmd-prefix* cmd))))
+  (let* ((cmd (make-symbol (string-downcase cmd)))
+	(cmd-name (intern (fmt "~a-~a" *cmd-prefix* cmd)))
+	)
     `(eval-always
        (defun ,cmd ,args
          ,docstring
